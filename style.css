@@ -34,3 +34,5 @@ nav a{position:relative}nav a::after{content:"";position:absolute;left:0;right:0
 }
 nav a{display:inline-flex;align-items:center;min-height:24px}
 @media(max-width:420px){header{gap:14px}.brand{flex-shrink:0}nav{gap:8px 12px;max-width:195px}}
+
+.case-cta{display:block;margin-top:16px;font-size:13px;font-weight:600;color:var(--blue)}.workrow:hover .case-cta{text-decoration:underline;text-underline-offset:4px}.article{max-width:960px}.article>section{max-width:740px;margin-inline:auto}
