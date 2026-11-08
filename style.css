@@ -36,3 +36,27 @@ nav a{display:inline-flex;align-items:center;min-height:24px}
 @media(max-width:420px){header{gap:14px}.brand{flex-shrink:0}nav{gap:8px 12px;max-width:195px}}
 
 .case-cta{display:block;margin-top:16px;font-size:13px;font-weight:600;color:var(--blue)}.workrow:hover .case-cta{text-decoration:underline;text-underline-offset:4px}.article{max-width:960px}.article>section{max-width:740px;margin-inline:auto}
+/* Depth stays on diagrams so text and links remain stable. */
+.diagram-inline{display:block;width:100%;height:auto;overflow:visible}
+.project-visual,.system,.case-diagram{--tilt-x:0deg;--tilt-y:0deg;--scroll-depth:0px;--scroll-turn:0deg;position:relative;transform-style:preserve-3d;transform-origin:center;transition:transform .35s ease,filter .35s ease}
+.project-visual{overflow:visible;isolation:isolate}
+.project-visual::before{content:"";position:absolute;inset:8px -7px -9px 7px;border:1px solid #345b7826;border-radius:12px;transform:translateZ(-16px);pointer-events:none}
+.project-visual .diagram-inline{border-radius:12px;filter:drop-shadow(0 14px 16px #253c4c12)}
+.motion-toggle{position:fixed;bottom:18px;right:18px;z-index:10;border:1px solid #a8b7bf;border-radius:24px;padding:9px 15px;background:#f6f5f0f2;color:#345b78;font:12px system-ui;cursor:pointer;box-shadow:0 3px 15px #23313a12}
+.motion-toggle:focus-visible{outline:3px solid var(--blue);outline-offset:4px}.motion-toggle:disabled{cursor:default}
+@media(prefers-reduced-motion:no-preference){
+ html:not(.motion-off)::before{content:"";position:fixed;top:0;left:0;right:0;height:3px;z-index:20;background:var(--blue);transform-origin:left;transform:scaleX(var(--reading-progress,0));pointer-events:none}
+ .project-visual,.system,.case-diagram{transform:perspective(1200px) translateY(var(--scroll-depth)) rotateX(calc(var(--tilt-x) + var(--scroll-turn))) rotateY(var(--tilt-y))}
+ .reveal-pending{opacity:0;transform:perspective(1200px) translateY(30px) rotateX(5deg);transform-origin:50% 100%}
+ .reveal-ready.is-visible{opacity:1;transform:none}
+ .workrow:hover .project-visual{filter:drop-shadow(0 15px 17px #345b7814)}
+ .casehero{animation:case-arrive .75s cubic-bezier(.2,.7,.2,1) both}
+ @keyframes case-arrive{from{opacity:.5;transform:perspective(1200px) translateY(22px) rotateX(3deg)}to{opacity:1;transform:none}}
+}
+.motion-off *, .motion-off *::before,.motion-off *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+.motion-off .reveal-pending{opacity:1;transform:none}
+.motion-off .project-visual,.motion-off .system,.motion-off .case-diagram{transform:none!important;filter:none}
+.motion-off .diagram-signal{display:none}
+@media(prefers-reduced-motion:reduce){.project-visual,.system,.case-diagram{transform:none;filter:none}.project-visual::before{display:none}.diagram-signal{display:none}}
+@media(max-width:760px){.project-visual::before{inset:4px -3px -5px 3px}.motion-toggle{bottom:12px;right:12px}footer{padding-bottom:65px}}
+.motion-off::view-transition-group(*),.motion-off::view-transition-old(*),.motion-off::view-transition-new(*){animation:none!important}
